@@ -1,17 +1,27 @@
 package com.jpkrause.c_feed;
 
+import com.jpkrause.c_feed.ReadFile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 
 public class CategoryListActivity extends ListActivity {
 	
-	public String[] categories = {"jjj", "sof"};
+	List<String> categories, searchCat;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +29,54 @@ public class CategoryListActivity extends ListActivity {
 		setContentView(R.layout.activity_category_list);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		
+		//declare reader class and input stream
+		ReadFile fileReader;
+		InputStream input = null;
+		
+		//try to read categories file
+		fileReader = new ReadFile();
+		categories = new ArrayList<String>();
+		searchCat = new ArrayList<String>();
+		try {
+			input = getAssets().open("categories.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			categories = fileReader.OpenFile(input);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			input = getAssets().open("searchCat.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			searchCat = fileReader.OpenFile(input);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//populate the list
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,categories);
+		setListAdapter(adapter);
+	}
+	
+	//return selected category when an item is selected
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		Intent r = new Intent();
+		r.putExtra(Constants.SELECTED_CATEGORY, categories.get(position));
+		r.putExtra(Constants.SELECTED_CATEGORY_CODE, searchCat.get(position));
+		setResult(Constants.RESULT_OK,r);
+		finish();
 	}
 
 	/**

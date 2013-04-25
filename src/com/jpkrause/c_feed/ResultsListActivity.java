@@ -1,3 +1,4 @@
+//stopped video at 1:07
 package com.jpkrause.c_feed;
 
 import java.io.IOException;
@@ -12,9 +13,12 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.ListActivity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -23,14 +27,22 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class ResultsListActivity extends ListActivity {
 
-	List headlines;
-	List links;
-	
+	private ArrayList<ResultsDetails> headlines;
+	private List<String> links;
+	private ResultsDetails Detail;
+	private ContentValues values;
+	private String url;
+	private Context context = this;
+	private Cursor cur;
+	public static final int NOT_SEEN = 0;
+	public DBHelper dbHelper;
+	public SQLiteDatabase db;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,27 +50,36 @@ public class ResultsListActivity extends ListActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		// initializing instance variables
-				headlines = new ArrayList();
-				links = new ArrayList();
 
-				new PostTask().execute("http://feeds.pcworld.com/pcworld/latestnews");
+		Intent i = getIntent();
+		url = i.getExtras().getString("url");
+		headlines = new ArrayList<ResultsDetails>();
+		links = new ArrayList<String>();
+		values = new ContentValues();
+
+		new PostTask().execute(url);
 	}
 
 	// definition of task class
 	private class PostTask extends AsyncTask<String, Integer, String> {
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// displayProgressBar("Downloading...");
 		}
 
-		
 		@Override
 		protected String doInBackground(String... params) {
-			String url = params[0];
+			String urlGiven = params[0];
+			String valueLink;
 			try {
-				URL url2 = new URL("http://losangeles.craigslist.org/sof/index.rss");
+
+				// open database
+				dbHelper = new DBHelper(ResultsListActivity.this);
+				db = dbHelper.getWritableDatabase();
+
+				URL url2 = new URL(urlGiven);
 
 				XmlPullParserFactory factory = XmlPullParserFactory
 						.newInstance();
@@ -90,23 +111,56 @@ public class ResultsListActivity extends ListActivity {
 					if (eventType == XmlPullParser.START_TAG) {
 						if (xpp.getName().equalsIgnoreCase("item")) {
 							insideItem = true;
+							Detail = new ResultsDetails();
 						} else if (xpp.getName().equalsIgnoreCase("title")) {
 							if (insideItem) {
-								headlines.add(xpp.nextText());// extract
-																// headline
+								Detail.setTitle(xpp.nextText());// extract headline
 							}
 						} else if (xpp.getName().equalsIgnoreCase("link")) {
 							if (insideItem) {
-								links.add(xpp.nextText());// extract link of
-															// article
+								valueLink = xpp.nextText();
+								links.add(valueLink);// extract link
+								values.put(DBHelper.C_LINK, valueLink);
+								db.insertWithOnConflict(DBHelper.TABLE, null, values,
+										SQLiteDatabase.CONFLICT_IGNORE);//for tracking if the listing is new
+								values.clear();
+							}
+						}
+						else if (xpp.getName().equalsIgnoreCase("description")) {
+							if (insideItem) {
+								Detail.setDesc(xpp.nextText());// extract description
+							}
+						}
+						else if (xpp.getName().equalsIgnoreCase("dc:date")) {
+							if (insideItem) {
+								Detail.setDate(xpp.nextText());// extract timestamp
 							}
 						}
 					} else if (eventType == XmlPullParser.END_TAG
 							&& xpp.getName().equalsIgnoreCase("item")) {
 						insideItem = false;
+						headlines.add(Detail);
 					}
 					eventType = xpp.next();
 				}
+				
+				for(int i = 0; i < links.size();i++){
+					//cur = db.rawQuery("SELECT "+DBHelper.C_LINK+" as c_seen FROM "+DBHelper.TABLE+" WHERE "+DBHelper.C_LINK+" = '"+links.get(i)+"'", null);
+					cur = db.query(DBHelper.TABLE, new String[]{DBHelper.C_SEEN}, DBHelper.C_LINK+"=?", new String[]{links.get(i)}, null, null, null);
+					cur.moveToFirst();
+					if(cur.getInt(cur.getColumnIndex(DBHelper.C_SEEN)) == 0){
+						headlines.get(i).setIcon(R.raw.cfeednew);
+					}
+					else{
+						headlines.get(i).setIcon(R.drawable.ic_launcher);
+					}
+					cur.close();
+				}
+
+				// close db
+				db.close();
+				dbHelper.close();
+
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (XmlPullParserException e) {
@@ -128,9 +182,7 @@ public class ResultsListActivity extends ListActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			ArrayAdapter adapter = new ArrayAdapter(ResultsListActivity.this,android.R.layout.simple_list_item_1, headlines);
-
-			setListAdapter(adapter);
+			setListAdapter(new CustomAdapter(headlines, context));
 		}
 
 	}
@@ -147,13 +199,19 @@ public class ResultsListActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
+		//set listing to seen in database
+		values.clear();
+		values.put(DBHelper.C_SEEN, 1);
+		dbHelper = new DBHelper(ResultsListActivity.this);
+		db = dbHelper.getWritableDatabase();
+		db.update(DBHelper.TABLE, values, DBHelper.C_LINK+"=?", new String[]{links.get(position)});
+		db.close();
+		dbHelper.close();
+		
 		Uri uri = Uri.parse((String) links.get(position));
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		startActivity(intent);
 	}
-	
-	
-
 
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.

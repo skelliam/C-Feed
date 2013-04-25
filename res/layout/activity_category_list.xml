@@ -9,7 +9,7 @@
     tools:context=".CategoryListActivity" >
     
     <ListView
-        android:id="@+android:id/categorylist"
+        android:id="@+android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 

@@ -1,7 +1,5 @@
 package com.jpkrause.c_feed;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,22 +7,15 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
-	private ExpandableListAdapter mAdapter;
-	
-	public String citySelected;
-	public String categorySelected;
+
+	public String url;
 	public Button searchBtn;
 	public Button cityBtn;
 	public Button categoryBtn;
 	public EditText searchTxt;
-	
-
-	
+	public SearchCriteria criteria;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +25,67 @@ public class MainActivity extends Activity {
 		cityBtn = (Button) findViewById(R.id.cityBtn);
 		categoryBtn = (Button) findViewById(R.id.categoryBtn);
 		searchTxt = (EditText) findViewById(R.id.searchText);
-		
+
+		criteria = new SearchCriteria();
+
+		// city button action
 		cityBtn.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				Intent chooseCity = new Intent(getApplicationContext(), CityListActivity.class);
-				startActivityForResult(chooseCity,100);
+				Intent chooseCity = new Intent(getApplicationContext(),
+						CityListActivity.class);
+				startActivityForResult(chooseCity, Constants.CITY);
 			}
 		});
-		
+
+		// category button action
+		categoryBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent chooseCategory = new Intent(getApplicationContext(),
+						CategoryListActivity.class);
+				startActivityForResult(chooseCategory, Constants.CATEGORIES);
+			}
+		});
+
+		// search button action
+		searchBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				criteria.setSearchQuery(searchTxt.getText().toString());
+				url = criteria.getCityCode() + "/search/"
+						+ criteria.getCategoryCode() + "?query=" + criteria.getSearchQuery()
+						+ "&format=rss";
+				Intent initiateSearch = new Intent(getApplicationContext(),
+						ResultsListActivity.class);
+				initiateSearch.putExtra("url", url);
+				startActivity(initiateSearch);
+
+			}
+		});
+
 	}
-	
+
+	// gets results of category and city
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == 100){
-			citySelected = data.getExtras().getString("city");
-			cityBtn.setText(citySelected);
+		if (requestCode == Constants.CITY) {
+			if (resultCode == Constants.RESULT_OK) {
+				criteria.setCityCode(data.getStringExtra(Constants.SELECTED_CITY_CODE));
+				criteria.setCityName(data.getStringExtra(Constants.SELECTED_CITY));
+				cityBtn.setText(criteria.getCityName());
+			}
+		}
+		if (requestCode == Constants.CATEGORIES) {
+			if (resultCode == Constants.RESULT_OK) {
+				criteria.setCategoryCode(data.getStringExtra(Constants.SELECTED_CATEGORY_CODE));
+				criteria.setCategoryName(data.getStringExtra(Constants.SELECTED_CATEGORY));
+				categoryBtn.setText(criteria.getCategoryName());
+			}
 		}
 	}
 
@@ -61,22 +95,4 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
-	public String getCitySelected() {
-		return citySelected;
-	}
-
-	public String getCategorySelected() {
-		return categorySelected;
-	}
-
-	public void setCitySelected(String citySelected) {
-		this.citySelected = citySelected;
-	}
-
-	public void setCategorySelected(String categorySelected) {
-		this.categorySelected = categorySelected;
-	}
-	
-
 }

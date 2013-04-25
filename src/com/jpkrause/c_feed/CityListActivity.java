@@ -1,11 +1,11 @@
 package com.jpkrause.c_feed;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +18,8 @@ import android.content.Intent;
 import android.os.Build;
 
 public class CityListActivity extends ListActivity {
-	
-	List<String> cities;
-	
+
+	List<String> cities, searchCities;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,21 +27,35 @@ public class CityListActivity extends ListActivity {
 		setContentView(R.layout.activity_city_list);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		
-		Intent i = getIntent();
-		
-		cities = new ArrayList();
-		cities.add("losangeles");
-		cities.add("sfbay");
-		ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cities);
+
+		// declare reader class and input stream
+		ReadFile fileReader;
+		InputStream input = null;
+
+		// try to read categories file
+		fileReader = new ReadFile();
+		cities = new ArrayList<String>();
+		searchCities = new ArrayList<String>();
+		try {
+			input = getAssets().open("CACities.txt");
+			cities = fileReader.OpenFile(input);
+			input = getAssets().open("CACitiesCode.txt");
+			searchCities = fileReader.OpenFile(input);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, cities);
 		setListAdapter(adapter);
 	}
-	
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		Intent r = new Intent();
-		r.putExtra("city", cities.get(position));
-		setResult(100,r);
+		r.putExtra(Constants.SELECTED_CITY, cities.get(position));
+		r.putExtra(Constants.SELECTED_CITY_CODE, searchCities.get(position));
+		setResult(Constants.RESULT_OK,r);
 		finish();
 	}
 
