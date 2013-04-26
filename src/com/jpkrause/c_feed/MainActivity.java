@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent chooseCity = new Intent(getApplicationContext(),
-						CityListActivity.class);
+						ContinentListActivity.class);
 				startActivityForResult(chooseCity, Constants.CITY);
 			}
 		});

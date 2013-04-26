@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jpkrause.c_feed"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="0.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -33,12 +33,36 @@
                 android:value="com.jpkrause.c_feed.MainActivity" />
         </activity>
         <activity
-            android:name="com.jpkrause.c_feed.CityListActivity"
-            android:label="@string/title_activity_city_list"
+            android:name="com.jpkrause.c_feed.ContinentListActivity"
+            android:label="@string/title_activity_continent_list"
             android:parentActivityName="com.jpkrause.c_feed.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpkrause.c_feed.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.jpkrause.c_feed.CountryListActivity"
+            android:label="@string/title_activity_country_list"
+            android:parentActivityName="com.jpkrause.c_feed.ContinentListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpkrause.c_feed.ContinentListActivity" />
+        </activity>
+        <activity
+            android:name="com.jpkrause.c_feed.StateListActivity"
+            android:label="@string/title_activity_state_list"
+            android:parentActivityName="com.jpkrause.c_feed.CountryListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpkrause.c_feed.CountryListActivity" />
+        </activity>
+        <activity
+            android:name="com.jpkrause.c_feed.CityListActivity"
+            android:label="@string/title_activity_city_list"
+            android:parentActivityName="com.jpkrause.c_feed.StateListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpkrause.c_feed.StateListActivity" />
         </activity>
         <activity
             android:name="com.jpkrause.c_feed.CategoryListActivity"
