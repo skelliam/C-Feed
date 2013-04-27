@@ -18,6 +18,9 @@ package com.jpkrause.c_feed;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -25,7 +28,7 @@ import android.widget.TextView;
 
 public class aboutDialog {
 	
-	public static AlertDialog create(Context context) {
+	public static AlertDialog create(final Context context) {
 		  final TextView message = new TextView(context);
 		  final SpannableString s = 
 		               new SpannableString(context.getText(R.string.help_message));
@@ -38,6 +41,16 @@ public class aboutDialog {
 		   .setCancelable(true)
 		   .setIcon(R.drawable.ic_launcher)
 		   .setPositiveButton(R.string.help_ok, null)
+		   .setNeutralButton(R.string.help_donate, new DialogInterface.OnClickListener() {
+			    
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			    	Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jkrause%40lavabit%2ecom&lc=US&item_name=JKrause%20Software&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					context.startActivity(intent);
+			     
+			    }
+			   })
 		   .setView(message)
 		   .create();
 		 }
