@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name="com.jpkrause.c_feed.ResultsListActivity"
-            android:label="@string/title_activity_list"
+            android:label="@string/title_results_activity_list"
             android:parentActivityName="com.jpkrause.c_feed.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,12 +65,20 @@
                 android:value="com.jpkrause.c_feed.StateListActivity" />
         </activity>
         <activity
-            android:name="com.jpkrause.c_feed.CategoryListActivity"
-            android:label="@string/title_activity_category_list"
+            android:name="com.jpkrause.c_feed.SectionListActivity"
+            android:label="@string/title_activity_section_list"
             android:parentActivityName="com.jpkrause.c_feed.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpkrause.c_feed.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.jpkrause.c_feed.CategoryListActivity"
+            android:label="@string/title_activity_category_list"
+            android:parentActivityName="com.jpkrause.c_feed.SectionListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpkrause.c_feed.SectionListActivity" />
         </activity>
     </application>
 

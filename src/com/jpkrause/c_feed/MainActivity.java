@@ -1,23 +1,26 @@
 /* This file is part of C-Feed for Android <http://github.com/jpkrause>.
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License version 3
-* as published by the Free Software Foundation.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
-* for more details.
-*
-* Copyright (C) 2013 John Krause
-*/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
+ * for more details.
+ *
+ * Copyright (C) 2013 John Krause
+ */
 package com.jpkrause.c_feed;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +38,17 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// check and show startup dialog
+		SharedPreferences prefs = getSharedPreferences(Constants.PREFS, 0);
+		boolean firstRun = prefs.getBoolean(Constants.FIRST_START_SEEN, true);
+		if (firstRun) {
+			openAboutDialog();
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putBoolean(Constants.FIRST_START_SEEN, false);
+			editor.commit();
+		}
+
 		searchBtn = (Button) findViewById(R.id.searchBtn);
 		cityBtn = (Button) findViewById(R.id.cityBtn);
 		categoryBtn = (Button) findViewById(R.id.categoryBtn);
@@ -59,7 +73,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent chooseCategory = new Intent(getApplicationContext(),
-						CategoryListActivity.class);
+						SectionListActivity.class);
 				startActivityForResult(chooseCategory, Constants.CATEGORIES);
 			}
 		});
@@ -69,10 +83,16 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				criteria.setSearchQuery(searchTxt.getText().toString());
-				url = criteria.getCityCode() + "/search/"
-						+ criteria.getCategoryCode() + "?query=" + criteria.getSearchQuery()
-						+ "&format=rss";
+				criteria.setSearchQuery(searchTxt.getText().toString()
+						.replaceAll("\\s+", "+"));
+				if (criteria.getSearchQuery().equals("")) {
+					url = criteria.getCityCode() + "/"
+							+ criteria.getCategoryCode() + "/index.rss";
+				} else {
+					url = criteria.getCityCode() + "/search/"
+							+ criteria.getCategoryCode() + "?query="
+							+ criteria.getSearchQuery() + "&format=rss";
+				}
 				Intent initiateSearch = new Intent(getApplicationContext(),
 						ResultsListActivity.class);
 				initiateSearch.putExtra("url", url);
@@ -89,18 +109,37 @@ public class MainActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == Constants.CITY) {
 			if (resultCode == Constants.RESULT_OK) {
-				criteria.setCityCode(data.getStringExtra(Constants.SELECTED_CITY_CODE));
-				criteria.setCityName(data.getStringExtra(Constants.SELECTED_CITY));
+				criteria.setCityCode(data
+						.getStringExtra(Constants.SELECTED_CITY_CODE));
+				criteria.setCityName(data
+						.getStringExtra(Constants.SELECTED_CITY));
 				cityBtn.setText(criteria.getCityName());
 			}
 		}
 		if (requestCode == Constants.CATEGORIES) {
 			if (resultCode == Constants.RESULT_OK) {
-				criteria.setCategoryCode(data.getStringExtra(Constants.SELECTED_CATEGORY_CODE));
-				criteria.setCategoryName(data.getStringExtra(Constants.SELECTED_CATEGORY));
-				categoryBtn.setText(criteria.getCategoryName());
+				criteria.setCategoryCode(data
+						.getStringExtra(Constants.SELECTED_CATEGORY_CODE));
+				criteria.setCategoryName(data
+						.getStringExtra(Constants.SELECTED_CATEGORY));
+				categoryBtn.setText(Constants.selectedSection + " - "
+						+ criteria.getCategoryName());
 			}
 		}
+	}
+
+	private void openAboutDialog() {
+		// create about dialog
+		final AlertDialog aboutC = aboutDialog.create(this);
+		aboutC.show();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		super.onOptionsItemSelected(item);
+		openAboutDialog();
+		return true;
 	}
 
 	@Override
@@ -109,4 +148,5 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
 }

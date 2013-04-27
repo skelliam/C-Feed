@@ -16,6 +16,8 @@ package com.jpkrause.c_feed;
 
 public class Constants {
 	
+	public static final String PREFS = "cFeedPrefs";
+	public static final String FIRST_START_SEEN = "firstStartSeen";
 	public static final int RESULT_OK = 11;
 	public static final int RESULT_CANCELLED = 6;
 	public static final int CATEGORIES = 2;
@@ -27,5 +29,7 @@ public class Constants {
 	public static final String SELECTED_CITY_CODE = "selCityCode";
 	public static final String SELECTED_CATEGORY = "selCat";
 	public static final String SELECTED_CATEGORY_CODE = "selCatCode";
+	public static final String SELECTED_SECTION = "selCatCode";
+	public static String selectedSection = "";
 
 }

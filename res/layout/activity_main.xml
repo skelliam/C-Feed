@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Select a region to search in"
-        android:textSize="23dp"
+        android:text="@string/text_select_region"
+        android:textSize="22sp"
         android:textColor="#ffffff" />
         
         <TextView
@@ -25,8 +25,8 @@
         android:layout_below="@+id/cityBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Select a category"
-        android:textSize="23dp"
+        android:text="@string/text_select_category"
+        android:textSize="22sp"
         android:textColor="#ffffff" />
 
     <Button
@@ -36,7 +36,7 @@
         android:layout_below="@+id/searchText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Search" />
+        android:text="@string/btn_text_search" />
 
     <EditText
         android:id="@+id/searchText"
@@ -46,7 +46,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Search for...."
+        android:hint="@string/text_search_hint"
         android:textColorHint="#fffbb9"
         android:inputType="text" >
 
@@ -60,7 +60,7 @@
         android:layout_below="@+id/categoryText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Category" />
+        android:text="@string/btn_text_category" />
 
     <Button
         android:id="@+id/cityBtn"
@@ -69,6 +69,6 @@
         android:layout_below="@+id/regionText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Region" />
+        android:text="@string/btn_text_region" />
 
 </RelativeLayout>

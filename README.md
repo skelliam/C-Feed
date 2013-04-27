@@ -3,8 +3,6 @@ C-Feed
 
 A Craigslist search app for Android OS
 
-Currently the program is only set of for citites in California, I will expand it soon
-
 Copyright (C) 2013 John Krause
 jkrause@lavabit.com
 

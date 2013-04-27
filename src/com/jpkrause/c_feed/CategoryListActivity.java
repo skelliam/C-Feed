@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +46,10 @@ public class CategoryListActivity extends ListActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		Intent i = getIntent();
+		String section = i.getExtras().getString(Constants.SELECTED_SECTION);
+		String openFile = checkSection(section);
+		
 		
 		//declare reader class and input stream
 		ReadFile fileReader;
@@ -55,24 +60,9 @@ public class CategoryListActivity extends ListActivity {
 		categories = new ArrayList<String>();
 		searchCat = new ArrayList<String>();
 		try {
-			input = getAssets().open("categories.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
+			input = getAssets().open(openFile+".txt");
 			categories = fileReader.OpenFile(input);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			input = getAssets().open("searchCat.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
+			input = getAssets().open(openFile+"links.txt");
 			searchCat = fileReader.OpenFile(input);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -103,16 +93,18 @@ public class CategoryListActivity extends ListActivity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.category_list, menu);
-		return true;
+	
+	private void openAboutDialog() {
+		// create about dialog
+		final AlertDialog aboutC = aboutDialog.create(this);
+		aboutC.show();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		super.onOptionsItemSelected(item);
+		openAboutDialog();
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -126,6 +118,43 @@ public class CategoryListActivity extends ListActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	private String checkSection(String selected){
+		if(selected.equalsIgnoreCase("Community")){
+			return "community";
+		}
+		if(selected.equalsIgnoreCase("Discussion Forums")){
+			return "discussion";
+		}
+		if(selected.equalsIgnoreCase("Housing")){
+			return "housing";
+		}
+		if(selected.equalsIgnoreCase("For Sale")){
+			return "forsale";
+		}
+		if(selected.equalsIgnoreCase("Services")){
+			return "services";
+		}
+		if(selected.equalsIgnoreCase("Jobs")){
+			return "jobs";
+		}
+		if(selected.equalsIgnoreCase("Gigs")){
+			return "gigs";
+		}
+		if(selected.equalsIgnoreCase("Resumes")){
+			return "resumes";
+		}
+		else{
+			return "NULL";
+		}
 	}
 
 }

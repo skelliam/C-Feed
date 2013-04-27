@@ -26,7 +26,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +53,8 @@ public class ResultsListActivity extends ListActivity {
 	private String url;
 	private Context context = this;
 	private Cursor cur;
+	private ProgressDialog pBarDialog;
+	private CustomAdapter custAdap;
 	public static final int NOT_SEEN = 0;
 	public DBHelper dbHelper;
 	public SQLiteDatabase db;
@@ -62,13 +66,21 @@ public class ResultsListActivity extends ListActivity {
 		setContentView(R.layout.activity_results_list);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		//show progress dialog
+		pBarDialog = new ProgressDialog(this);
+		pBarDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pBarDialog.setMessage("Loading Results...");
+		pBarDialog.setCancelable(false);
+		pBarDialog.dismiss();
+		
 		// initializing instance variables
-
 		Intent i = getIntent();
 		url = i.getExtras().getString("url");
 		headlines = new ArrayList<ResultsDetails>();
 		links = new ArrayList<String>();
 		values = new ContentValues();
+		
 
 		new PostTask().execute(url);
 	}
@@ -79,7 +91,8 @@ public class ResultsListActivity extends ListActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			// displayProgressBar("Downloading...");
+			// display Progress Bar
+			pBarDialog.show();
 		}
 
 		@Override
@@ -120,7 +133,7 @@ public class ResultsListActivity extends ListActivity {
 
 				// Returns the type of current event: Start_TAG, END_TAG, etc.
 				int eventType = xpp.getEventType();
-				while (eventType != XmlPullParser.END_DOCUMENT) {
+				for (int j = 1; eventType != XmlPullParser.END_DOCUMENT; j++) {
 					if (eventType == XmlPullParser.START_TAG) {
 						if (xpp.getName().equalsIgnoreCase("item")) {
 							insideItem = true;
@@ -155,9 +168,13 @@ public class ResultsListActivity extends ListActivity {
 						headlines.add(Detail);
 					}
 					eventType = xpp.next();
+					publishProgress((int)(j/40));
 				}
 				
+				
+				
 				for(int i = 0; i < links.size();i++){
+					publishProgress(i);
 					//cur = db.rawQuery("SELECT "+DBHelper.C_LINK+" as c_seen FROM "+DBHelper.TABLE+" WHERE "+DBHelper.C_LINK+" = '"+links.get(i)+"'", null);
 					cur = db.query(DBHelper.TABLE, new String[]{DBHelper.C_SEEN}, DBHelper.C_LINK+"=?", new String[]{links.get(i)}, null, null, null);
 					cur.moveToFirst();
@@ -189,13 +206,15 @@ public class ResultsListActivity extends ListActivity {
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 			super.onProgressUpdate(values);
-			// updateProgressBar(values[0]);
+			pBarDialog.setProgress(values[0]);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			setListAdapter(new CustomAdapter(headlines, context));
+			pBarDialog.dismiss();
+			custAdap = new CustomAdapter(headlines, context);
+			setListAdapter(custAdap);
 		}
 
 	}
@@ -220,6 +239,7 @@ public class ResultsListActivity extends ListActivity {
 		db.update(DBHelper.TABLE, values, DBHelper.C_LINK+"=?", new String[]{links.get(position)});
 		db.close();
 		dbHelper.close();
+		headlines.get(position).setIcon(R.drawable.ic_launcher);
 		
 		Uri uri = Uri.parse((String) links.get(position));
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -239,12 +259,21 @@ public class ResultsListActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.list, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	private void openAboutDialog() {
+		// create about dialog
+		final AlertDialog aboutC = aboutDialog.create(this);
+		aboutC.show();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		super.onOptionsItemSelected(item);
+		openAboutDialog();
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this

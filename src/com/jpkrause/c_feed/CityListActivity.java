@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -90,12 +91,21 @@ public class CityListActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.city_list, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	private void openAboutDialog() {
+		// create about dialog
+		final AlertDialog aboutC = aboutDialog.create(this);
+		aboutC.show();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		super.onOptionsItemSelected(item);
+		openAboutDialog();
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -125,7 +135,7 @@ public class CityListActivity extends ListActivity {
 			return "AZ";
 		}
 		else if(selected.equalsIgnoreCase("Arkansas")){
-			return "AK";
+			return "AR";
 		}
 		else if(selected.equalsIgnoreCase("California")){
 			return "CA";
@@ -264,6 +274,9 @@ public class CityListActivity extends ListActivity {
 		}
 		else if(selected.equalsIgnoreCase("Wyoming")){
 			return "WY";
+		}
+		else if(selected.equalsIgnoreCase("US Territories")){
+			return "USTR";
 		}
 		else{
 			return "NULL";
