@@ -33,6 +33,8 @@ public class MainActivity extends Activity {
 	public Button categoryBtn;
 	public EditText searchTxt;
 	public SearchCriteria criteria;
+	private SharedPreferences prefs;
+	private SharedPreferences.Editor editor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,15 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// check and show startup dialog
-		SharedPreferences prefs = getSharedPreferences(Constants.PREFS, 0);
-		boolean firstRun = prefs.getBoolean(Constants.FIRST_START_SEEN, true);
+		prefs = getSharedPreferences(Constants.PREFS, 0);
+		editor = prefs.edit();
+		
+		criteria = new SearchCriteria(prefs);	
+		
+		boolean firstRun = prefs.getBoolean(Constants.FIRST_RUN, true);
 		if (firstRun) {
 			openAboutDialog();
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.putBoolean(Constants.FIRST_START_SEEN, false);
+			editor.putBoolean(Constants.FIRST_RUN, false);
 			editor.commit();
 		}
 
@@ -53,8 +58,13 @@ public class MainActivity extends Activity {
 		cityBtn = (Button) findViewById(R.id.cityBtn);
 		categoryBtn = (Button) findViewById(R.id.categoryBtn);
 		searchTxt = (EditText) findViewById(R.id.searchText);
+		
+		cityBtn.setText(criteria.getCityName());
+		categoryBtn.setText(criteria.getSectionName() + " - "
+				+ criteria.getCategoryName());
+		searchTxt.setText(criteria.getSearchQuery().replace('+', ' '));
 
-		criteria = new SearchCriteria();
+		
 
 		// city button action
 		cityBtn.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +95,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				criteria.setSearchQuery(searchTxt.getText().toString()
 						.replaceAll("\\s+", "+"));
+				editor.putString(Constants.LAST_QUERY, criteria.getSearchQuery());
+				editor.commit();
 				if (criteria.getSearchQuery().equals("")) {
 					url = criteria.getCityCode() + "/"
 							+ criteria.getCategoryCode() + "/index.rss";
@@ -114,6 +126,9 @@ public class MainActivity extends Activity {
 				criteria.setCityName(data
 						.getStringExtra(Constants.SELECTED_CITY));
 				cityBtn.setText(criteria.getCityName());
+				editor.putString(Constants.LAST_CITY_CODE, criteria.getCityCode());
+				editor.putString(Constants.LAST_CITY, criteria.getCityName());
+				editor.commit();
 			}
 		}
 		if (requestCode == Constants.CATEGORIES) {
@@ -122,8 +137,13 @@ public class MainActivity extends Activity {
 						.getStringExtra(Constants.SELECTED_CATEGORY_CODE));
 				criteria.setCategoryName(data
 						.getStringExtra(Constants.SELECTED_CATEGORY));
+				criteria.setSectionName(Constants.selectedSection);
 				categoryBtn.setText(Constants.selectedSection + " - "
 						+ criteria.getCategoryName());
+				editor.putString(Constants.LAST_CATEGORY_CODE, criteria.getCategoryCode());
+				editor.putString(Constants.LAST_CATEGORY, criteria.getCategoryName());
+				editor.putString(Constants.LAST_SECTION, criteria.getSectionName());
+				editor.commit();
 			}
 		}
 	}

@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/regionText"
-        android:layout_marginLeft="33dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/btn_text_region" />
 
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/categoryText"
         android:layout_below="@+id/categoryText"
-        android:layout_marginRight="33dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/btn_text_category" />
 

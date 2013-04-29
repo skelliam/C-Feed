@@ -17,19 +17,25 @@ package com.jpkrause.c_feed;
 public class Constants {
 	
 	public static final String PREFS = "cFeedPrefs";
-	public static final String FIRST_START_SEEN = "firstStartSeen";
+	public static final String FIRST_RUN = "firstRun";
 	public static final int RESULT_OK = 11;
 	public static final int RESULT_CANCELLED = 6;
 	public static final int CATEGORIES = 2;
 	public static final int CITY = 1;
 	public static final String SELECTED_CITY = "selCity";
+	public static final String SELECTED_CITY_CODE = "selCityCode";
 	public static final String SELECTED_CONTINENT = "selContinent";
 	public static final String SELECTED_COUNTRY = "selCountry";
 	public static final String SELECTED_STATE = "selState";
-	public static final String SELECTED_CITY_CODE = "selCityCode";
 	public static final String SELECTED_CATEGORY = "selCat";
 	public static final String SELECTED_CATEGORY_CODE = "selCatCode";
-	public static final String SELECTED_SECTION = "selCatCode";
+	public static final String SELECTED_SECTION = "selSection";
+	public static final String LAST_CITY_CODE = "lastCityCode";
+	public static final String LAST_CITY = "lastCity";
+	public static final String LAST_CATEGORY_CODE = "lastCatCode";
+	public static final String LAST_CATEGORY = "lastCat";
+	public static final String LAST_QUERY = "lastSearchQuery";
+	public static final String LAST_SECTION = "lastSection";
 	public static String selectedSection = "";
 
 }

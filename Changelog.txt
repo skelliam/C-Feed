@@ -1,0 +1,9 @@
+Changelog for C-Feed Copyright (C) 2013 John Krause
+-----------------------------------------------------
+
+-v0.2.1
+* app now saves last search and populates the search criteria with your last search
+* fixed text changing when switching orientation in main menu
+
+-v0.2
+* Initial release, saves viewed listings, usable for all United States

@@ -14,13 +14,33 @@
 */
 package com.jpkrause.c_feed;
 
+import android.content.SharedPreferences;
+
 public class SearchCriteria{
 	//class containing all the search criteria used in the search
-	private String cityName, cityCode, categoryName, categoryCode, searchQuery;
+	private String cityName, cityCode, categoryName, categoryCode, searchQuery, sectionName;
+	
+	//constructor
+	SearchCriteria(SharedPreferences data){
+		this.categoryCode = data.getString(Constants.LAST_CATEGORY_CODE, null);
+		this.categoryName = data.getString(Constants.LAST_CATEGORY, "Category");
+		this.cityCode = data.getString(Constants.LAST_CITY_CODE, null);
+		this.cityName = data.getString(Constants.LAST_CITY, "Region");
+		this.searchQuery = data.getString(Constants.LAST_QUERY, null);
+		this.sectionName = data.getString(Constants.LAST_SECTION, "Section");
+	}
 
 	//setters and getters
 	public String getCityName() {
 		return cityName;
+	}
+
+	public String getSectionName() {
+		return sectionName;
+	}
+
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
 	}
 
 	public void setCityName(String cityName) {
