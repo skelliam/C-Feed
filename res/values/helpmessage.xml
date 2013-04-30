@@ -6,7 +6,7 @@
         The app saves the listings that you have already opened and will show you if any of the listings in the search are new (meaning you have not opened them yet)\n\n
         This app is still in the beta stages and new features and functions are in progress\n\n
         Please feel free to contact me about any bugs, code improvements, or suggestions\n\n
-        C-Feed v0.2.1 Copyright &#169; 2013 John Krause jkrause@lavabit.com\n\n
+        C-Feed v0.2.2 Copyright &#169; 2013 John Krause jkrause@lavabit.com\n\n
         Released under the GPLv3 License - Source at GitHub https://github.com/jpkrause/C-Feed
         </string>
     <string name="help_ok">Cool!</string>
