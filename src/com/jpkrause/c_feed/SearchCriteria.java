@@ -26,7 +26,7 @@ public class SearchCriteria{
 		this.categoryName = data.getString(Constants.LAST_CATEGORY, "Category");
 		this.cityCode = data.getString(Constants.LAST_CITY_CODE, null);
 		this.cityName = data.getString(Constants.LAST_CITY, "Region");
-		this.searchQuery = data.getString(Constants.LAST_QUERY, null);
+		this.searchQuery = data.getString(Constants.LAST_QUERY, "");
 		this.sectionName = data.getString(Constants.LAST_SECTION, "Section");
 	}
 
