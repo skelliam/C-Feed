@@ -239,7 +239,7 @@ public class ResultsListActivity extends ListActivity {
 		db.update(DBHelper.TABLE, values, DBHelper.C_LINK+"=?", new String[]{links.get(position)});
 		db.close();
 		dbHelper.close();
-		headlines.get(position).setIcon(R.drawable.ic_launcher);
+		headlines.get(position).setIcon(R.drawable.ic_launcher_drawn);
 		
 		Uri uri = Uri.parse((String) links.get(position));
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);

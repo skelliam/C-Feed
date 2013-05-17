@@ -39,7 +39,7 @@ public class aboutDialog {
 		  return new AlertDialog.Builder(context)
 		   .setTitle(R.string.help_title)
 		   .setCancelable(true)
-		   .setIcon(R.drawable.ic_launcher)
+		   .setIcon(R.drawable.ic_launcher_drawn)
 		   .setPositiveButton(R.string.help_ok, null)
 		   .setNeutralButton(R.string.help_donate, new DialogInterface.OnClickListener() {
 			    
