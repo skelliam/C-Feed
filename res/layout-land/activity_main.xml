@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@raw/cfeedbg"
-    android:orientation="vertical"
+    android:background="@raw/cfeedbgnewland"
+    android:orientation="horizontal"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context=".MainActivity" >
@@ -47,7 +47,8 @@
         android:ems="10"
         android:hint="@string/text_search_hint"
         android:inputType="text"
-        android:textColorHint="#fffbb9" >
+        android:textColorHint="#fffbb9" 
+        android:textColor="#ffffff">
 
         <requestFocus />
     </EditText>

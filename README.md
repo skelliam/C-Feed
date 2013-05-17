@@ -10,7 +10,9 @@ Contact me about any bugs, code improvements, or suggestions.
 
 If you are grateful for this software and would like to donate please [click here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jkrause%40lavabit%2ecom&lc=US&item_name=JKrause%20Software&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) to give a paypal donation
 
-License info is in the LICENSE.txt file, below is a brief description of the GPLv3 in use for C-Feed
+Artwork is licencsed under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) which is detailed under ART_LICENCSE.txt [click here for more information](http://creativecommons.org/licenses/by-sa/3.0/)
+
+Software license info is in the LICENSE.txt file, below is a brief description of the GPLv3 in use for C-Feed
 
 C-Feed program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License version 3

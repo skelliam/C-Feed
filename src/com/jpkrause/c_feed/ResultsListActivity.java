@@ -179,10 +179,10 @@ public class ResultsListActivity extends ListActivity {
 					cur = db.query(DBHelper.TABLE, new String[]{DBHelper.C_SEEN}, DBHelper.C_LINK+"=?", new String[]{links.get(i)}, null, null, null);
 					cur.moveToFirst();
 					if(cur.getInt(cur.getColumnIndex(DBHelper.C_SEEN)) == 0){
-						headlines.get(i).setIcon(R.raw.cfeednew);
+						headlines.get(i).setIcon(R.raw.listnew);
 					}
 					else{
-						headlines.get(i).setIcon(R.drawable.ic_launcher);
+						headlines.get(i).setIcon(R.raw.listicon);
 					}
 					cur.close();
 				}
