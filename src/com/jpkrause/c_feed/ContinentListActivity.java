@@ -112,9 +112,10 @@ public class ContinentListActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		super.onOptionsItemSelected(item);
-		openAboutDialog();
+		if (item.getTitle().toString().equalsIgnoreCase("about")) {
+			openAboutDialog();
+		}
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="@string/text_select_region"
         android:textSize="22sp"
         android:textColor="#ffffff" />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/cityBtn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:text="@string/text_select_category"
         android:textSize="22sp"
         android:textColor="#ffffff" />
@@ -42,9 +42,9 @@
         android:id="@+id/searchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categoryBtn"
+        android:layout_below="@+id/optionsBtn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/text_search_hint"
         android:textColorHint="#fffbb9"
@@ -71,5 +71,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="@string/btn_text_region" />
+    
+    <Button
+        android:id="@+id/optionsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/btn_text_options" />
 
 </RelativeLayout>

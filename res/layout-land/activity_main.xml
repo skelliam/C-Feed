@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/btn_text_search" />
 
     <EditText
@@ -42,8 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="@string/text_search_hint"
         android:inputType="text"
@@ -71,5 +71,14 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/btn_text_category" />
+    
+    <Button
+        android:id="@+id/optionsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryBtn"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/btn_text_options" />
 
 </RelativeLayout>
