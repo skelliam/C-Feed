@@ -41,14 +41,12 @@
         android:id="@+id/searchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categoryBtn"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/categoryBtn"
         android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="@string/text_search_hint"
-        android:inputType="text"
-        android:textColorHint="#fffbb9" 
-        android:textColor="#ffffff">
+        android:inputType="text" >
 
         <requestFocus />
     </EditText>

@@ -92,30 +92,30 @@ public class OptionsActivity extends Activity implements OnItemSelectedListener 
 		}
 
 		if (criteria.getSectionName().equalsIgnoreCase("community")) {
-			bdrmSpinner.setVisibility(Spinner.INVISIBLE);
-			minAsk.setVisibility(EditText.INVISIBLE);
-			maxAsk.setVisibility(EditText.INVISIBLE);
-			cats.setVisibility(CheckBox.INVISIBLE);
-			dogs.setVisibility(CheckBox.INVISIBLE);
-			telecommute.setVisibility(CheckBox.INVISIBLE);
-			pay.setVisibility(RadioButton.INVISIBLE);
-			noPay.setVisibility(RadioButton.INVISIBLE);
-			all.setVisibility(RadioButton.INVISIBLE);
-			contract.setVisibility(CheckBox.INVISIBLE);
-			internship.setVisibility(CheckBox.INVISIBLE);
-			partTime.setVisibility(CheckBox.INVISIBLE);
-			nonProfit.setVisibility(CheckBox.INVISIBLE);
+			bdrmSpinner.setVisibility(Spinner.GONE);
+			minAsk.setVisibility(EditText.GONE);
+			maxAsk.setVisibility(EditText.GONE);
+			cats.setVisibility(CheckBox.GONE);
+			dogs.setVisibility(CheckBox.GONE);
+			telecommute.setVisibility(CheckBox.GONE);
+			pay.setVisibility(RadioButton.GONE);
+			noPay.setVisibility(RadioButton.GONE);
+			all.setVisibility(RadioButton.GONE);
+			contract.setVisibility(CheckBox.GONE);
+			internship.setVisibility(CheckBox.GONE);
+			partTime.setVisibility(CheckBox.GONE);
+			nonProfit.setVisibility(CheckBox.GONE);
 		}
 
 		else if (criteria.getSectionName().equalsIgnoreCase("housing")) {
-			telecommute.setVisibility(CheckBox.INVISIBLE);
-			pay.setVisibility(RadioButton.INVISIBLE);
-			noPay.setVisibility(RadioButton.INVISIBLE);
-			all.setVisibility(RadioButton.INVISIBLE);
-			contract.setVisibility(CheckBox.INVISIBLE);
-			internship.setVisibility(CheckBox.INVISIBLE);
-			partTime.setVisibility(CheckBox.INVISIBLE);
-			nonProfit.setVisibility(CheckBox.INVISIBLE);
+			telecommute.setVisibility(CheckBox.GONE);
+			pay.setVisibility(RadioButton.GONE);
+			noPay.setVisibility(RadioButton.GONE);
+			all.setVisibility(RadioButton.GONE);
+			contract.setVisibility(CheckBox.GONE);
+			internship.setVisibility(CheckBox.GONE);
+			partTime.setVisibility(CheckBox.GONE);
+			nonProfit.setVisibility(CheckBox.GONE);
 			if(criteria.getBedrooms().equalsIgnoreCase(""))
 			bdrmSpinner.setSelection(0);
 			else if (criteria.getBedrooms().equalsIgnoreCase("1"))
@@ -147,46 +147,46 @@ public class OptionsActivity extends Activity implements OnItemSelectedListener 
 		}
 
 		else if (criteria.getSectionName().equalsIgnoreCase("for sale")) {
-			bdrmSpinner.setVisibility(Spinner.INVISIBLE);
-			cats.setVisibility(CheckBox.INVISIBLE);
-			dogs.setVisibility(CheckBox.INVISIBLE);
-			telecommute.setVisibility(CheckBox.INVISIBLE);
-			pay.setVisibility(RadioButton.INVISIBLE);
-			noPay.setVisibility(RadioButton.INVISIBLE);
-			all.setVisibility(RadioButton.INVISIBLE);
-			contract.setVisibility(CheckBox.INVISIBLE);
-			internship.setVisibility(CheckBox.INVISIBLE);
-			partTime.setVisibility(CheckBox.INVISIBLE);
-			nonProfit.setVisibility(CheckBox.INVISIBLE);
+			bdrmSpinner.setVisibility(Spinner.GONE);
+			cats.setVisibility(CheckBox.GONE);
+			dogs.setVisibility(CheckBox.GONE);
+			telecommute.setVisibility(CheckBox.GONE);
+			pay.setVisibility(RadioButton.GONE);
+			noPay.setVisibility(RadioButton.GONE);
+			all.setVisibility(RadioButton.GONE);
+			contract.setVisibility(CheckBox.GONE);
+			internship.setVisibility(CheckBox.GONE);
+			partTime.setVisibility(CheckBox.GONE);
+			nonProfit.setVisibility(CheckBox.GONE);
 			minAsk.setText(criteria.getMinAsk());
 			maxAsk.setText(criteria.getMaxAsk());
 		}
 
 		else if (criteria.getSectionName().equalsIgnoreCase("services")) {
-			bdrmSpinner.setVisibility(Spinner.INVISIBLE);
-			minAsk.setVisibility(EditText.INVISIBLE);
-			maxAsk.setVisibility(EditText.INVISIBLE);
-			cats.setVisibility(CheckBox.INVISIBLE);
-			dogs.setVisibility(CheckBox.INVISIBLE);
-			telecommute.setVisibility(CheckBox.INVISIBLE);
-			pay.setVisibility(RadioButton.INVISIBLE);
-			noPay.setVisibility(RadioButton.INVISIBLE);
-			all.setVisibility(RadioButton.INVISIBLE);
-			contract.setVisibility(CheckBox.INVISIBLE);
-			internship.setVisibility(CheckBox.INVISIBLE);
-			partTime.setVisibility(CheckBox.INVISIBLE);
-			nonProfit.setVisibility(CheckBox.INVISIBLE);
+			bdrmSpinner.setVisibility(Spinner.GONE);
+			minAsk.setVisibility(EditText.GONE);
+			maxAsk.setVisibility(EditText.GONE);
+			cats.setVisibility(CheckBox.GONE);
+			dogs.setVisibility(CheckBox.GONE);
+			telecommute.setVisibility(CheckBox.GONE);
+			pay.setVisibility(RadioButton.GONE);
+			noPay.setVisibility(RadioButton.GONE);
+			all.setVisibility(RadioButton.GONE);
+			contract.setVisibility(CheckBox.GONE);
+			internship.setVisibility(CheckBox.GONE);
+			partTime.setVisibility(CheckBox.GONE);
+			nonProfit.setVisibility(CheckBox.GONE);
 		}
 
 		else if (criteria.getSectionName().equalsIgnoreCase("jobs")) {
-			bdrmSpinner.setVisibility(Spinner.INVISIBLE);
-			minAsk.setVisibility(EditText.INVISIBLE);
-			maxAsk.setVisibility(EditText.INVISIBLE);
-			cats.setVisibility(CheckBox.INVISIBLE);
-			dogs.setVisibility(CheckBox.INVISIBLE);
-			pay.setVisibility(RadioButton.INVISIBLE);
-			noPay.setVisibility(RadioButton.INVISIBLE);
-			all.setVisibility(RadioButton.INVISIBLE);
+			bdrmSpinner.setVisibility(Spinner.GONE);
+			minAsk.setVisibility(EditText.GONE);
+			maxAsk.setVisibility(EditText.GONE);
+			cats.setVisibility(CheckBox.GONE);
+			dogs.setVisibility(CheckBox.GONE);
+			pay.setVisibility(RadioButton.GONE);
+			noPay.setVisibility(RadioButton.GONE);
+			all.setVisibility(RadioButton.GONE);
 			if(criteria.getAddOne().equalsIgnoreCase("telecommuting"))
 				telecommute.setChecked(true);
 			else
@@ -210,16 +210,16 @@ public class OptionsActivity extends Activity implements OnItemSelectedListener 
 		}
 
 		else if (criteria.getSectionName().equalsIgnoreCase("gigs")) {
-			bdrmSpinner.setVisibility(Spinner.INVISIBLE);
-			minAsk.setVisibility(EditText.INVISIBLE);
-			maxAsk.setVisibility(EditText.INVISIBLE);
-			cats.setVisibility(CheckBox.INVISIBLE);
-			dogs.setVisibility(CheckBox.INVISIBLE);
-			telecommute.setVisibility(CheckBox.INVISIBLE);
-			contract.setVisibility(CheckBox.INVISIBLE);
-			internship.setVisibility(CheckBox.INVISIBLE);
-			partTime.setVisibility(CheckBox.INVISIBLE);
-			nonProfit.setVisibility(CheckBox.INVISIBLE);
+			bdrmSpinner.setVisibility(Spinner.GONE);
+			minAsk.setVisibility(EditText.GONE);
+			maxAsk.setVisibility(EditText.GONE);
+			cats.setVisibility(CheckBox.GONE);
+			dogs.setVisibility(CheckBox.GONE);
+			telecommute.setVisibility(CheckBox.GONE);
+			contract.setVisibility(CheckBox.GONE);
+			internship.setVisibility(CheckBox.GONE);
+			partTime.setVisibility(CheckBox.GONE);
+			nonProfit.setVisibility(CheckBox.GONE);
 			if(criteria.getAddThree().equalsIgnoreCase(""))
 				all.setChecked(true);
 			else if(criteria.getAddThree().equalsIgnoreCase("nopay"))
@@ -229,19 +229,19 @@ public class OptionsActivity extends Activity implements OnItemSelectedListener 
 		}
 
 		else if (criteria.getSectionName().equalsIgnoreCase("resumes")) {
-			bdrmSpinner.setVisibility(Spinner.INVISIBLE);
-			minAsk.setVisibility(EditText.INVISIBLE);
-			maxAsk.setVisibility(EditText.INVISIBLE);
-			cats.setVisibility(CheckBox.INVISIBLE);
-			dogs.setVisibility(CheckBox.INVISIBLE);
-			telecommute.setVisibility(CheckBox.INVISIBLE);
-			pay.setVisibility(RadioButton.INVISIBLE);
-			noPay.setVisibility(RadioButton.INVISIBLE);
-			all.setVisibility(RadioButton.INVISIBLE);
-			contract.setVisibility(CheckBox.INVISIBLE);
-			internship.setVisibility(CheckBox.INVISIBLE);
-			partTime.setVisibility(CheckBox.INVISIBLE);
-			nonProfit.setVisibility(CheckBox.INVISIBLE);
+			bdrmSpinner.setVisibility(Spinner.GONE);
+			minAsk.setVisibility(EditText.GONE);
+			maxAsk.setVisibility(EditText.GONE);
+			cats.setVisibility(CheckBox.GONE);
+			dogs.setVisibility(CheckBox.GONE);
+			telecommute.setVisibility(CheckBox.GONE);
+			pay.setVisibility(RadioButton.GONE);
+			noPay.setVisibility(RadioButton.GONE);
+			all.setVisibility(RadioButton.GONE);
+			contract.setVisibility(CheckBox.GONE);
+			internship.setVisibility(CheckBox.GONE);
+			partTime.setVisibility(CheckBox.GONE);
+			nonProfit.setVisibility(CheckBox.GONE);
 		}
 
 	}

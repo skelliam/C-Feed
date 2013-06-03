@@ -143,17 +143,14 @@
 
     <EditText
         android:id="@+id/min_ask"
-        android:layout_width="wrap_content"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/bedrooms_opt"
         android:layout_below="@+id/bedrooms_opt"
         android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="@string/min_ask"
-        android:inputType="number"
-        android:textColor="#ffffff"
-        android:textColorHint="#fffbb9" >
+        android:inputType="number" >
 
         <requestFocus />
     </EditText>
@@ -168,8 +165,6 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/max_ask"
-        android:inputType="number"
-        android:textColor="#ffffff"
-        android:textColorHint="#fffbb9" />
+        android:inputType="number" />
 
 </RelativeLayout>

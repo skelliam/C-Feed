@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/text_select_region"
         android:textSize="22sp"
         android:textColor="#ffffff" />
@@ -47,9 +47,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/text_search_hint"
-        android:textColorHint="#fffbb9"
-        android:inputType="text" 
-        android:textColor="#ffffff">
+        android:inputType="text">
 
         <requestFocus />
     </EditText>
@@ -78,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryBtn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="@string/btn_text_options" />
 
 </RelativeLayout>

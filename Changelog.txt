@@ -1,5 +1,8 @@
 Changelog for C-Feed Copyright (C) 2013 John Krause
 -----------------------------------------------------
+-v0.3.0
+*added all search options to categories
+*fixed UI for older android versions
 
 -v0.2.3
 *Added new art assets
