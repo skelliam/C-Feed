@@ -11,6 +11,7 @@
     <string name="title_activity_state_list">Choose State/Province</string>
     <string name="title_activity_section_list">Choose Section</string>
     <string name="title_activity_options">Other Search Options</string>
+    <string name="title_activity_view_listing">View Listing</string>
     <string name="text_select_region">Select a region</string>
     <string name="text_select_category">Select a category</string>
     <string name="btn_text_search">Search</string>
@@ -19,6 +20,7 @@
     <string name="btn_text_region">Region</string>
     <string name="btn_text_options">Other Options</string>
     <string name="action_settings">Settings</string>
+
     <string-array name="bedrooms_array">
         <item>0+ Bedrooms</item>
         <item>1 Bedroom</item>
@@ -30,6 +32,7 @@
         <item>7+ Bedrooms</item>
         <item>8+ Bedrooms</item>
     </string-array>
+
     <string name="entire_post">Entire Post</string>
     <string name="title_only">Title</string>
     <string name="pay_opt">Pay</string>
@@ -45,6 +48,5 @@
     <string name="non_profit">Non-Profit</string>
     <string name="min_ask">Min Price</string>
     <string name="max_ask">Max Price</string>
-    
 
 </resources>

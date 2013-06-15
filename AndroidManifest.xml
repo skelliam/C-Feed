@@ -90,6 +90,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpkrause.c_feed.MainActivity" />
         </activity>
+        <activity
+            android:name="com.jpkrause.c_feed.ViewListingActivity"
+            android:label="@string/title_activity_view_listing"
+            android:parentActivityName="com.jpkrause.c_feed.ResultsListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpkrause.c_feed.ResultsListActivity" />
+        </activity>
     </application>
 
 </manifest>
