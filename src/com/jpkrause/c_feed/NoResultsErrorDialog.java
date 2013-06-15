@@ -21,15 +21,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-public class connectionErrorDialog {
+public class NoResultsErrorDialog {
 	public static AlertDialog create(final Context context) {
 		final Activity activity = (Activity) context;
 		  return new AlertDialog.Builder(context)
-		   .setTitle(R.string.error_title)
-		   .setMessage(R.string.error_message)
+		   .setTitle(R.string.no_results_title)
+		   .setMessage(R.string.no_results_message)
 		   .setCancelable(false)
 		   .setIcon(R.drawable.ic_launcher_drawn)
-		   .setPositiveButton(R.string.error_ok, new DialogInterface.OnClickListener() {
+		   .setPositiveButton(R.string.no_results_ok, new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

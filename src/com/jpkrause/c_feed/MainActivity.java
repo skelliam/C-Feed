@@ -236,7 +236,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		super.onOptionsItemSelected(item);
 		if (item.getTitle().toString().equalsIgnoreCase("about")) {
 			openAboutDialog();

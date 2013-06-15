@@ -80,7 +80,7 @@ public class ResultsListActivity extends ListActivity {
 			new PostTask().execute(url);
 		}
 		else{
-			showErrorDialog();
+			showConnectionErrorDialog();
 		}
 	}
 
@@ -222,8 +222,13 @@ public class ResultsListActivity extends ListActivity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			pBarDialog.dismiss();
+			if(links.size() == 0){
+				showNoResultsDialog();
+			}
+			else{
 			custAdap = new CustomAdapter(headlines, context);
 			setListAdapter(custAdap);
+			}
 		}
 
 	}
@@ -270,9 +275,15 @@ public class ResultsListActivity extends ListActivity {
 		aboutC.show();
 	}
 	
-	private void showErrorDialog() {
-		final AlertDialog error = connectionErrorDialog.create(this);
+	private void showConnectionErrorDialog() {
+		final AlertDialog error = ConnectionErrorDialog.create(this);
 		error.show();
+	}
+	
+	private void showNoResultsDialog() {
+		//TODO
+		final AlertDialog noResults = NoResultsErrorDialog.create(this);
+		noResults.show();
 	}
 
 	@Override
