@@ -1,17 +1,17 @@
 /* This file is part of C-Feed for Android <http://github.com/jpkrause>.
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License version 3
-* as published by the Free Software Foundation.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
-* for more details.
-*
-* Copyright (C) 2013 John Krause
-*/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
+ * for more details.
+ *
+ * Copyright (C) 2013 John Krause
+ */
 package com.jpkrause.c_feed;
 
 import java.io.IOException;
@@ -33,6 +33,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -55,28 +57,31 @@ public class ResultsListActivity extends ListActivity {
 	public DBHelper dbHelper;
 	public SQLiteDatabase db;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_results_list);
-		
-		//show progress dialog
-		pBarDialog = new ProgressDialog(this);
-		pBarDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pBarDialog.setMessage("Loading Results...");
-		pBarDialog.setCancelable(false);
-		pBarDialog.dismiss();
-		
-		// initializing instance variables
-		Intent i = getIntent();
-		url = i.getExtras().getString("url");
-		headlines = new ArrayList<ResultsDetails>();
-		links = new ArrayList<String>();
-		values = new ContentValues();
-		
 
-		new PostTask().execute(url);
+		if (isOnline()) {
+			// set up progress dialog
+			pBarDialog = new ProgressDialog(this);
+			pBarDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			pBarDialog.setMessage("Loading Results...");
+			pBarDialog.setCancelable(false);
+			pBarDialog.dismiss();
+
+			// initializing instance variables
+			Intent i = getIntent();
+			url = i.getExtras().getString("url");
+			headlines = new ArrayList<ResultsDetails>();
+			links = new ArrayList<String>();
+			values = new ContentValues();
+
+			new PostTask().execute(url);
+		}
+		else{
+			showErrorDialog();
+		}
 	}
 
 	// definition of task class
@@ -134,26 +139,34 @@ public class ResultsListActivity extends ListActivity {
 							Detail = new ResultsDetails();
 						} else if (xpp.getName().equalsIgnoreCase("title")) {
 							if (insideItem) {
-								Detail.setTitle(xpp.nextText());// extract headline
+								Detail.setTitle(xpp.nextText());// extract
+																// headline
 							}
 						} else if (xpp.getName().equalsIgnoreCase("link")) {
 							if (insideItem) {
 								valueLink = xpp.nextText();
 								links.add(valueLink);// extract link
 								values.put(DBHelper.C_LINK, valueLink);
-								db.insertWithOnConflict(DBHelper.TABLE, null, values,
-										SQLiteDatabase.CONFLICT_IGNORE);//for tracking if the listing is new
+								db.insertWithOnConflict(DBHelper.TABLE, null,
+										values, SQLiteDatabase.CONFLICT_IGNORE);// for
+																				// tracking
+																				// if
+																				// the
+																				// listing
+																				// is
+																				// new
 								values.clear();
 							}
-						}
-						else if (xpp.getName().equalsIgnoreCase("description")) {
+						} else if (xpp.getName()
+								.equalsIgnoreCase("description")) {
 							if (insideItem) {
-								Detail.setDesc(xpp.nextText());// extract description
+								Detail.setDesc(xpp.nextText());// extract
+																// description
 							}
-						}
-						else if (xpp.getName().equalsIgnoreCase("dc:date")) {
+						} else if (xpp.getName().equalsIgnoreCase("dc:date")) {
 							if (insideItem) {
-								Detail.setDate(xpp.nextText());// extract timestamp
+								Detail.setDate(xpp.nextText());// extract
+																// timestamp
 							}
 						}
 					} else if (eventType == XmlPullParser.END_TAG
@@ -162,20 +175,22 @@ public class ResultsListActivity extends ListActivity {
 						headlines.add(Detail);
 					}
 					eventType = xpp.next();
-					publishProgress((int)(j/40));
+					publishProgress((int) (j / 40));
 				}
-				
-				
-				
-				for(int i = 0; i < links.size();i++){
+
+				for (int i = 0; i < links.size(); i++) {
 					publishProgress(i);
-					//cur = db.rawQuery("SELECT "+DBHelper.C_LINK+" as c_seen FROM "+DBHelper.TABLE+" WHERE "+DBHelper.C_LINK+" = '"+links.get(i)+"'", null);
-					cur = db.query(DBHelper.TABLE, new String[]{DBHelper.C_SEEN}, DBHelper.C_LINK+"=?", new String[]{links.get(i)}, null, null, null);
+					// cur =
+					// db.rawQuery("SELECT "+DBHelper.C_LINK+" as c_seen FROM "+DBHelper.TABLE+" WHERE "+DBHelper.C_LINK+" = '"+links.get(i)+"'",
+					// null);
+					cur = db.query(DBHelper.TABLE,
+							new String[] { DBHelper.C_SEEN }, DBHelper.C_LINK
+									+ "=?", new String[] { links.get(i) },
+							null, null, null);
 					cur.moveToFirst();
-					if(cur.getInt(cur.getColumnIndex(DBHelper.C_SEEN)) == 0){
+					if (cur.getInt(cur.getColumnIndex(DBHelper.C_SEEN)) == 0) {
 						headlines.get(i).setIcon(R.raw.listnew);
-					}
-					else{
+					} else {
 						headlines.get(i).setIcon(R.raw.listicon);
 					}
 					cur.close();
@@ -225,17 +240,19 @@ public class ResultsListActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		//set listing to seen in database
+		// set listing to seen in database
 		values.clear();
 		values.put(DBHelper.C_SEEN, 1);
 		dbHelper = new DBHelper(ResultsListActivity.this);
 		db = dbHelper.getWritableDatabase();
-		db.update(DBHelper.TABLE, values, DBHelper.C_LINK+"=?", new String[]{links.get(position)});
+		db.update(DBHelper.TABLE, values, DBHelper.C_LINK + "=?",
+				new String[] { links.get(position) });
 		db.close();
 		dbHelper.close();
 		headlines.get(position).setIcon(R.drawable.ic_launcher_drawn);
-		
-		Intent intent = new Intent(getApplicationContext(), ViewListingActivity.class);
+
+		Intent intent = new Intent(getApplicationContext(),
+				ViewListingActivity.class);
 		intent.putExtra("urlLink", links.get(position));
 		startActivity(intent);
 	}
@@ -252,6 +269,11 @@ public class ResultsListActivity extends ListActivity {
 		final AlertDialog aboutC = aboutDialog.create(this);
 		aboutC.show();
 	}
+	
+	private void showErrorDialog() {
+		final AlertDialog error = connectionErrorDialog.create(this);
+		error.show();
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -260,6 +282,21 @@ public class ResultsListActivity extends ListActivity {
 			openAboutDialog();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	// verify Internet connection method
+	private boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfoMob = cm
+				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		NetworkInfo netInfoWifi = cm
+				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		if ((netInfoMob != null || netInfoWifi != null)
+				&& (netInfoMob.isConnectedOrConnecting() || netInfoWifi
+						.isConnectedOrConnecting())) {
+			return true;
+		}
+		return false;
 	}
 
 }
