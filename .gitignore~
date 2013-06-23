@@ -21,6 +21,3 @@ local.properties
 
 # gimp files
 *.xcf
-
-#original images
-resOriginals/
